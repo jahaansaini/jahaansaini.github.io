@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset ="utf-8" />
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <title> Visualization Technologies - Homework (9/21) </title>
+        <style>
+            .funkyText{
+                font-family: "comic sans MS";
+                font-size: 36 px;
+                font-style: italic;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+
+       <h1 id="title">my cool title</h1>
+
+       <svg id="circle-viz"> 
+       </svg>
+       <br/>
+       <button onclick= "drawCircles(data1)">Data1</button>
+       <button onclick= "drawCircles(data2)">Data2</button>
+
+       <script>
+           var title = d3.select ("#title");
+           title
+           .style ("color","red")
+           .attr ("class", "funkyText");
+
+           var data1 = [
+            {
+               country:"usa",
+               value:123
+           },
+           {
+               country: "mxn",
+               value: 321
+           }
+           ];
+           var data2 = [
+               {
+                   country:"chn",
+                   value: 128 
+               },
+               {
+                   country: "mxn",
+                   value: 142 
+               }
+           ];
+           function drawCircles(dataArray){
+               function circlePosition(){
+                    return Math.random()*100 +50;
+               }
+         
+            var circles = d3.select("#circle-viz").selectAll ("circle")
+            .data(dataArray, function(d)
+            {
+                return d.country;
+            });
+// Entering circles 
+            circles.enter().append ("circle")
+            .attr ("fill",function (d){
+                if (d.country == "usa"){
+                    return "blue";
+                }
+                else if (d.country=="mxn"){
+                    return "green";
+                }
+                else if (d.country== "chn") {
+                    return "red";
+                }
+            })
+            .attr ("id", function (d){
+                return d.country;
+            })
+            .attr("cy","100")
+            .attr ("cx", circlePosition)
+            .attr ("r", "0")
+            .transition().duration (1000)
+            .attr ("r", "25");
+
+// updating circles
+            circles
+            .transition().duration (1000)
+            .attr ("cx", circlePosition);
+//exiting circles
+            circles.exit()
+            .transition().duration(1000)
+            .attr("r","0")
+            .remove ();
+           }
+
+       </script>
+
+   </body>
+</html>
