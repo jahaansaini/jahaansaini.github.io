@@ -5,94 +5,113 @@
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <title> Visualization Technologies - Homework (9/21) </title>
         <style>
-            .funkyText{
-                font-family: "comic sans MS";
-                font-size: 36 px;
-                font-style: italic;
+            .hw4text{
+                font-family: "calibri";
+                font-size: 12 px;
+                font-style: underline;
                 font-weight: bold;
             }
-        </style>
+       </style>
     </head>
     <body>
 
-       <h1 id="title">my cool title</h1>
+       <h1 id="title">Back to Square 1</h1>
+       <svg id="rect-viz"></svg>
 
-       <svg id="circle-viz"> 
-       </svg>
        <br/>
-       <button onclick= "drawCircles(data1)">Data1</button>
-       <button onclick= "drawCircles(data2)">Data2</button>
+       <br/>
+       <button onclick= "drawRects(tropical)">Papaya and guava for breakfast</button>
+       <button onclick= "drawRects(cold)">Lychee and raspberry for lunch </button>
+       <button onclick= "drawRects(warm)">Mango and passion fruit for dinner</button>
 
        <script>
            var title = d3.select ("#title");
            title
-           .style ("color","red")
-           .attr ("class", "funkyText");
+           .style ("color","pink")
+           .attr ("class", "hw4text");
 
-           var data1 = [
-            {
-               country:"usa",
-               value:123
+           var tropical = [
+               { 
+               Fruit:"papaya",
+               value: 20
            },
            {
-               country: "mxn",
-               value: 321
+               Fruit: "guava",
+               value: 25
            }
            ];
-           var data2 = [
+           var cold = [
+            {
+                Fruit:"lychee",
+                value: 30 
+            },
+            {
+                Fruit: "raspberry",
+                value: 15 
+            }
+            ];
+           var warm = [
                {
-                   country:"chn",
-                   value: 128 
+                Fruit:"mango",
+                value: 55
                },
                {
-                   country: "mxn",
-                   value: 142 
+                Fruit: "passionfruit",
+                value: 45
                }
            ];
-           function drawCircles(dataArray){
-               function circlePosition(){
-                    return Math.random()*100 +50;
-               }
-         
-            var circles = d3.select("#circle-viz").selectAll ("circle")
-            .data(dataArray, function(d)
+            function drawRects(dataArray){
+            var rects = d3.select("#rect-viz")
+            .selectAll("rects")
+            .data(dataArray,function(d)
             {
-                return d.country;
+                return d.Fruit;
             });
-// Entering circles 
-            circles.enter().append ("circle")
+      
+            function rectPosition(){
+                return Math.random()*100+50;
+            }
+// Entering squares 
+            rects.enter()
+            .append("rect")
             .attr ("fill",function (d){
-                if (d.country == "usa"){
-                    return "blue";
+                if (d.Fruit == "papaya"){
+                    return "orange";
                 }
-                else if (d.country=="mxn"){
+                else if (d.Fruit=="guava"){
                     return "green";
                 }
-                else if (d.country== "chn") {
+                else if (d.Fruit== "lychee") {
+                    return "pink";
+                }
+                else if (d.Fruit== "raspberry") {
                     return "red";
                 }
+                else if (d.Fruit== "mango") {
+                    return "yellow";
+                }
+                else if (d.Fruit== "passionfruit") {
+                    return "purple";
+                }
             })
-            .attr ("id", function (d){
-                return d.country;
-            })
-            .attr("cy","100")
-            .attr ("cx", circlePosition)
-            .attr ("r", "0")
-            .transition().duration (1000)
-            .attr ("r", "25");
+            .attr("x", "200")
+            .attr("y", rectPosition)
+            .attr("width", "400")
+            .attr("height", "400")
+          .transition().duration(1000)
+            .attr("x", "200");
 
-// updating circles
-            circles
+// updating squares
+            rects
             .transition().duration (1000)
-            .attr ("cx", circlePosition);
-//exiting circles
-            circles.exit()
+            .attr("y", "100")
+
+//exiting squares
+            rects.exit()
             .transition().duration(1000)
-            .attr("r","0")
+            .attr("height","0")
             .remove ();
            }
-
        </script>
-
    </body>
 </html>
