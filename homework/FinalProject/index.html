@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <title>U.S. Air Travel Trends Project </title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <div id="banner">
+
+      <h1>U.S. Air Travel Trends</h1>
+
+      <p>
+       Description:  Millions of people take flights in the U.S. every year for reasons that range from business, tourism, to family visits. Due to the high number of flights, there is a tremendous amount of available data that can be used to extract valuable insights for stakeholders in the airline industry. 
+        <br> Objective: The objective of this project is to identify trends in U.S. air travel to (1) understand changes in passenger behavior throughout the years to further prepare for future events.
+        <br> Source: The dataset was downloaded from Kaggle, but the original data was sourced from The Department of Transportation Office of the Assistant Secretary for Aviation and International Affairs. The dataset contains two files, one listing US departure flights and another with total passengers from the years 1990 to 2020. The “Departures” data has sixteen columns and approximately 900K entries containing the date of each flight, departure and arrival airports and airline carrier. The “Passengers” data had similar columns with about 600K entries and included the total number of passengers on a flight.
+      </p>
+
+    </div>
+
+    <div class="section">
+      <p> Line graphs for the two biggest (% of market share) travel companies showing flight and passenger trends managers to gauge operational efficiency by tracking the ratio between the two.
+        <br> A highly efficient airline will show trendlines that are similar and overlap. When there is a significant discrepancy, we can see a distinct gap.</p>
+      <svg id="chart1"></svg>
+    </div>
+
+    <div class="section">
+      <svg id="chart2"></svg>
+      <p>The bubble chart will depict U.S. and foreign airports with size tied to the number of departures (larger the bubble, the more departures) and color denoting the number of passengers (darker shades indicate a higher number of passengers).</p>
+    </div>
+
+    <div id="tooltip">
+      <h2 id="title"></h2>
+      Value: <span id="value"></span>
+    </div>
+
+    <script src="banner.js"></script>
+    <script src="chart1.js"></script>
+
+  </body>
+</html>

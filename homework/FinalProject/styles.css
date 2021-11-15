@@ -1,9 +1,12 @@
 body {
     margin: 0;
+    font-family: "calibri";
+    text-align: left;
   }
   
   #banner {
-    background-color: #d31c1c;
+    background-image: url('pic.jpg');
+    background-color: #60a4a8;
     background-position: 50% 100%;
     background-size: cover;
     font-family: "calibri";
