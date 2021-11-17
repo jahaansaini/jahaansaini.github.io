@@ -23,12 +23,12 @@ body {
   
   .section p {
     flex: 1;
-    border: 2px solid rgb(0, 38, 255);
+    border: 2px solid rgb(230, 94, 16);
     background-color: rgb(120, 151, 177);
   }
   
   .section svg {
-    border: 2px solid rgb(0, 38, 255);
+    border: 2px solid rgb(230, 94, 16);
     flex: 2;
     height: 300px;
     margin: 20px;
