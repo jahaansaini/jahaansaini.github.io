@@ -6,7 +6,6 @@ body {
   
   #banner {
     background-image: url('pic.jpg');
-    background-color: #60a4a8;
     background-position: 50% 100%;
     background-size: cover;
     font-family: "calibri";
@@ -16,6 +15,7 @@ body {
   
   .section {
     align-items: center;
+    background-color: #9fe4e7;
     display: flex;
     padding: 50px;
   }
