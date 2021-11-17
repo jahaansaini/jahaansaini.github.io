@@ -23,6 +23,8 @@ body {
   
   .section p {
     flex: 1;
+    border: 2px solid rgb(0, 38, 255);
+    background-color: rgb(120, 151, 177);
   }
   
   .section svg {
