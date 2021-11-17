@@ -25,7 +25,7 @@ body {
   }
   
   .section svg {
-    border: 1px solid red;
+    border: 2px solid rgb(0, 38, 255);
     flex: 2;
     height: 300px;
     margin: 20px;
@@ -42,8 +42,8 @@ body {
   }
   
   #tooltip {
-    background: white;
-    border: 1px solid black;
+    background: rgb(10, 85, 114);
+    border: 1px solid rgb(111, 165, 179);
     border-radius: 5px;
     display: none;
     padding: 5px;
