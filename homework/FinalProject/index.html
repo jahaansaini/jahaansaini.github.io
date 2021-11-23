@@ -35,13 +35,13 @@
       Value: <span id="value"></span>
     </div>
 
-    <script src="banner.js">
-    d3.csv("Passengers_Departures_Report.csv", function(error, data) {
-        console.log(data);
-      });   
-    </script>
-    
+    <script src="banner.js"></script>
     <script src="chart1.js"></script>
+    <script> 
+    d3.csv("Passengers_Departures_Report.csv", function(error, data) {
+    console.log(data);
+    });  
+    </script>
 
   </body>
 </html>
