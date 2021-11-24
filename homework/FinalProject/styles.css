@@ -6,7 +6,7 @@ body {
   }
   
   #banner {
-    background-image: url('pic.jpg');
+    background-image: url('pic.jpg'); 
     background-position: 50% 100%;
     background-size: cover;
     font-family: "calibri";
