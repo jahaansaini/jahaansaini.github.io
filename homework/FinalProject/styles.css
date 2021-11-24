@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: "calibri";
-    color: rgb(11, 39, 100);
+    color: rgb(78, 148, 57);
     text-align: center;
   }
   
@@ -16,20 +16,20 @@ body {
   
   .section {
     align-items: center;
-    background-color: #9fe4e7;
+    background-color: #4e9c52;
     display: flex;
     padding: 50px;
   }
   
   .section p {
     flex: 1;
-    border: 2px solid rgb(96, 122, 143);
+    border: 2px solid rgb(69, 102, 56);
     border-radius: 5px;
-    background-color: rgb(120, 151, 177);
+    background-color: rgb(142, 190, 102);
   }
   
   .section svg {
-    border: 2px solid rgb(96, 122, 143);
+    border: 2px solid rgb(69, 165, 93);
     border-radius: 5px;
     flex: 2;
     height: 300px;
@@ -47,14 +47,10 @@ body {
   }
   
   #tooltip {
-    background: rgb(10, 85, 114);
-    border: 1px solid rgb(111, 165, 179);
+    background: rgb(41, 180, 48);
+    border: 1px solid rgb(76, 155, 12);
     border-radius: 5px;
     display: none;
     padding: 5px;
     position: absolute;
   }
-  
-  
-  
-  
