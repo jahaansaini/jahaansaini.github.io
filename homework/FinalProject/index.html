@@ -35,9 +35,39 @@
     </div>
 
     <script src="banner.js"></script>
+
     <script src="chart1.js"></script>
+
     <script> 
+
+    // Loading CSV files
     d3.csv("Passengers_Departures_Report.csv", function(error, data) {
+    
+      // Loop through an array to change the String "value"
+      // into a number.
+        data.forEach(function(row) {
+          row.value = parseFloat(row.value);
+        });
+      // Filter an Array of data to only DELTA AIRLINES
+      // by returning a boolean value for each row.
+        var delta = data.filter(function(row) {
+          return row.carrier == "DL";
+        });
+        console.log("delta", delta);
+      // Filter an Array of data to only AMERICAN AIRLINES
+      // by returning a boolean value for each row.
+        var american = data.filter(function(row) {
+          return row.carrier == "AA";
+        });
+        console.log("american", american);
+      // Filter an Array of data to only UNITED AIRLINES
+      // by returning a boolean value for each row.
+        var united = data.filter(function(row) {
+          return row.carrier == "UA";
+        });
+        console.log("united", united);
+
+
     console.log(data);
     });  
     </script>
