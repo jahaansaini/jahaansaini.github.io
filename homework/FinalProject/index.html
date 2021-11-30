@@ -42,57 +42,26 @@
 
     // Loading CSV files
     d3.csv("Passengers_Departures_Report.csv", function(error, data){
+  
       console.log(data);
-      data.forEach(function(d) {
-        d["Total"]=parseFloat (d["Total"]);
-      })
+        data.forEach(function(d) {
+          d["Total"] = parseFloat(d["Total"]);
+        });
+
+      var nestedData = d3.nest()
+        .key(function(d) { return d.Carrier; })
+        .entries(data);
+      console.log(nestedData);
+
+      var americanData = nestedData
+        .filter(function(d) {return d.key == "AA";});
+      var unitedData = nestedData
+        .filter(function(d) {return d.key == "UA";});
+      var deltaData = nestedData
+        .filter(function(d) {return d.key == "DL";});
     });
-
-    // Filter an Array of data to only DELTA AIRLINES
-    // by returning a boolean value for each row.
-    function delta (){
-      d3.csv("Passengers_Departures_Report.csv", function(error, data) {
-      var delta = data.filter(function(row) {
-        return row["Carrier"] == "DL";
-        })
-      console.log("delta", delta);
-      });
-    }
-
-    // Filter an Array of data to only AMERICAN AIRLINES
-    function american (){
-      d3.csv("Passengers_Departures_Report.csv", function(error, data) {
-      var american = data.filter (function(row){
-        return row ["Carrier"] == "AA";
-        })
-      console.log("american", american);
-      });
-    }
     
-    // Filter an Array of data to only UNITED AIRLINES   
-    function united (){
-      d3.csv("Passengers_Departures_Report.csv", function(error, data) {
-      var united = data.filter (function(row){
-        return row ['Carrier'] == 'UA';
-        })
-      console.log("united", united);
-      });
-    }
-    
-    // Loop through an array to change the String "value"
-    // into a number.
-      d3.csv("Passengers_Departures_Report.csv", function(error, data) {
-
-      var totalPass = data.forEach(function(data) {
-          data.Total = parseFloat(data.Total);
-      });
-    console.log(data);
-    });  
-
-      var carrier_data = d3.nest()
-      .key (function(d) {return d.Carrier;})
-      .rollup
-    </script>
+      </script>
 
   </body>
 </html>
