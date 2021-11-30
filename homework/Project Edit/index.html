@@ -1,12 +1,102 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Temperature in San Francisco Line Chart</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8" />
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <title>U.S. Air Travel Trends Project </title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <svg width="960" height="500"></svg>
-    <script src="bundle.js"></script>
+
+    <div id="banner">
+
+        <h1>U.S. Air Travel Trends</h1>
+      <p style="background-color: #d2d44dd0"> 
+          Description:  Millions of people take flights in the U.S. every year for reasons that range from business, tourism, to family visits. Due to the high number of flights, there is a tremendous amount of available data that can be used to extract valuable insights for stakeholders in the airline industry. 
+        <br> Objective: The objective of this project is to identify trends in U.S. air travel to (1) understand changes in passenger behavior throughout the years to further prepare for future events.
+      </p>
+
+    </div>
+
+    <div class="section">
+      <p> Line graphs for the two biggest (% of market share) travel companies showing flight and passenger trends managers to gauge operational efficiency by tracking the ratio between the two.
+        <br> A highly efficient airline will show trendlines that are similar and overlap. When there is a significant discrepancy, we can see a distinct gap.</p>
+      <svg id="chart1"></svg>
+    </div>
+
+    <div class="section">
+      <svg id="chart2"></svg>
+      <p>The bubble chart will depict U.S. and foreign airports with size tied to the number of departures (larger the bubble, the more departures) and color denoting the number of passengers (darker shades indicate a higher number of passengers).</p>
+    </div>
+
+    <div id="tooltip">
+      <h2 id="title"></h2>
+      Value: <span id="value"></span>
+    </div>
+
+    <div id="my_dataviz"> </div>
+
+    <script src="banner.js"></script>
+    <script src="chart1.js"></script>
+    <script> 
+    // set the dimensions and margins of the graph
+    var margin = {top: 10, right: 30, bottom: 30, left: 60},
+      width = 460 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+    // Loading CSV files
+    d3.csv("Passengers_Departures_Report.csv", function(d){
+    return { year : d.Year, value : d.Total }
+    console.log(data);
+        data.forEach(function(d) {
+          d["Total"] = parseFloat(d["Total"]);
+        });
+
+      var nestedData = d3.nest()
+        .key(function(d) { return d.Carrier; })
+        .entries(data);
+      console.log(nestedData);
+
+      var americanData = nestedData
+        .filter(function(d) {return d.key == "AA";});
+      console.log(americanData);
+
+      var unitedData = nestedData
+        .filter(function(d) {return d.key == "UA";});
+      console.log(unitedData);
+
+      var deltaData = nestedData
+        .filter(function(d) {return d.key == "DL";});
+      console.log(deltaData);
+    },
+
+    function(error, data){ 
+    // Add X axis --> Years
+      var x = d3.scaleTime()
+        .domain(d3.extent(nestedData, function(d) { return d.Year; }))
+        .range([ 0, width ]);
+      svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+    // Add Y axis --> Total passengers
+      var y = d3.scaleLinear()
+        .domain([0, d3.max(nestedData, function(d) { return +d.Total; })])
+        .range([ height, 0 ]);
+      svg.append("g")
+        .call(d3.axisLeft(y));
+
+    // Add the line
+      svg.append("path")
+        .datum(nestedData)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+          .x(function(d) { return x(d.Year) })
+          .y(function(d) { return y(d.Total) })
+          )
+    });
+      </script>
   </body>
 </html>
