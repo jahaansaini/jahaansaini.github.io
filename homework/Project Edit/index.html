@@ -45,7 +45,7 @@
       height = 400 - margin.top - margin.bottom;
 
     // Loading CSV files
-    d3.csv("Passengers_Departures_Report.csv", function(d){
+    d3.csv("Passengers_Departures_Report.csv", function(error, data){
     return { year : d.Year, value : d.Total }
     console.log(data);
         data.forEach(function(d) {
@@ -68,9 +68,6 @@
       var deltaData = nestedData
         .filter(function(d) {return d.key == "DL";});
       console.log(deltaData);
-    },
-
-    function(error, data){ 
     // Add X axis --> Years
       var x = d3.scaleTime()
         .domain(d3.extent(nestedData, function(d) { return d.Year; }))
