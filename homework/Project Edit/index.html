@@ -46,12 +46,12 @@
 
     // Loading CSV files
     d3.csv("Passengers_Departures_Report.csv", function(error, data){
-    return { year : d.Year, value : d.Total }
-    console.log(data);
         data.forEach(function(d) {
           d["Total"] = parseFloat(d["Total"]);
         });
-
+    return { year : data.Year, total : data.Total }
+        console.log(data);
+    
       var nestedData = d3.nest()
         .key(function(d) { return d.Carrier; })
         .entries(data);
