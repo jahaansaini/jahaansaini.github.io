@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <title>U.S. Air Travel Trends Project </title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <div id="banner">
+
+        <h1>U.S. Air Travel Trends</h1>
+      <p style="background-color: #d2d44dd0"> 
+          Description:  Millions of people take flights in the U.S. every year for reasons that range from business, tourism, to family visits. Due to the high number of flights, there is a tremendous amount of available data that can be used to extract valuable insights for stakeholders in the airline industry. 
+        <br> Objective: The objective of this project is to identify trends in U.S. air travel to (1) understand changes in passenger behavior throughout the years to further prepare for future events.
+      </p>
+
+    </div>
+
+    <div class="section">
+      <p> Line graphs for the two biggest (% of market share) travel companies showing flight and passenger trends managers to gauge operational efficiency by tracking the ratio between the two.
+        <br> A highly efficient airline will show trendlines that are similar and overlap. When there is a significant discrepancy, we can see a distinct gap.</p>
+      <svg id="chart1"></svg>
+    </div>
+
+    <div class="section">
+      <svg id="chart2"></svg>
+      <p>The bubble chart will depict U.S. and foreign airports with size tied to the number of departures (larger the bubble, the more departures) and color denoting the number of passengers (darker shades indicate a higher number of passengers).</p>
+    </div>
+
+    <div id="tooltip">
+      <h2 id="title"></h2>
+      Value: <span id="value"></span>
+    </div>
+
+    <div id="finalchart"> </div>
+
+    <script src="banner.js"></script>
+    <script src="chart1.js"></script>
+
+    <button onclick="update(americanData)">American Airlines Dataset </button>
+    <button onclick="update(unitedData)">United Airlines Dataset </button>
+    <button onclick="update(deltaData)">Delta Airlines Dataset </button>     
+    
+    <script> 
+    // Loading CSV files
+    d3.csv("Passengers_Departures_Report.csv", function(d){
+
+    console.log(data);
+        data.forEach(function(d) {
+          d["Total"] = parseFloat(d["Total"]);
+        });
+
+      var nestedData = d3.nest()
+        .key(function(d) { return d.Carrier; })
+        .entries(data);
+      console.log(nestedData);
+
+      var americanData = nestedData
+        .filter(function(d) {return d.key == "AA";});
+      console.log(americanData);
+
+      var unitedData = nestedData
+        .filter(function(d) {return d.key == "UA";});
+      console.log(unitedData);
+
+      var deltaData = nestedData
+        .filter(function(d) {return d.key == "DL";});
+      console.log(deltaData);
+    },
+
+    function(data){ 
+        var svg = d3.select("#finalchart")
+
+    // Initialise a X axis:
+        var x = d3.scaleLinear().range([0,width]);
+        var xAxis = d3.axisBottom().scale(x);
+        svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .attr("class","myXaxis")
+
+    // Initialize an Y axis
+        var y = d3.scaleLinear().range([height, 0]);
+        var yAxis = d3.axisLeft().scale(y);
+        svg.append("g")
+        .attr("class","myYaxis")
+
+    // Create a function that takes a dataset as input and update the plot:
+        function update(nestedData) {
+
+    // Create the X axis:
+        x.domain([0, d3.max(nestedData, function(d) { return d.Year}) ]);
+        svg.selectAll(".myXaxis").transition()
+        .duration(3000)
+        .call(xAxis);
+
+    // create the Y axis
+        y.domain([0, d3.max(nestedData, function(d) { return d.Total}) ]);
+        svg.selectAll(".myYaxis")
+        .transition()
+        .duration(3000)
+        .call(yAxis);
+
+    // Create a update selection: bind to the new data
+        var u = svg.selectAll(".lineTest")
+        .data([data], function(d){ return d.ser1 });
+
+    // Updata the line
+        u       
+        .enter()
+        .append("path")
+        .attr("class","lineTest")
+        .merge(u)
+        .transition()
+        .duration(3000)
+        .attr("d", d3.line()
+            .x(function(d) { return x(d.ser1); })
+            .y(function(d) { return y(d.ser2); }))
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 2.5)
+}
+        update(americanData)
+    });
+    </script>
+  </body>
+</html>
