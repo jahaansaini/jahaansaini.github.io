@@ -44,13 +44,19 @@
     <button onclick="update(deltaData)">Delta Airlines Dataset </button>     
     
     <script> 
-    // Loading CSV files
+
+// Loading CSV files
+
     d3.csv("Passengers_Departures_Report.csv", function(error, data){
+
+// Convert Total Passengers from string to integer 
 
     console.log(data);
         data.forEach(function(d) {
           d["Total"] = parseFloat(d["Total"]);
         });
+
+// Double nest the data & filter the data arrays for DL, AA, UA
 
       var nestedData = d3.nest()
         .key(function(d) { return d.Carrier; })
@@ -84,60 +90,74 @@
         });
       });
       console.log(deltaData);
-
-      var svg = d3.select("#finalchart")  
-// Initialise a X axis:
-   var x = d3.scaleLinear().range([0,width]);
-     var xAxis = d3.axisBottom().scale(x);
-     svg.append("g")
-     .attr("transform", "translate(0," + height + ")")
-     .attr("class","myXaxis")
-
-// // Initialize an Y axis
-//     var y = d3.scaleLinear().range([height, 0]);
-//     var yAxis = d3.axisLeft().scale(y);
-//     svg.append("g")
-//     .attr("class","myYaxis")
-
-// // Create a function that takes a dataset as input and update the plot:
-//     function update(nestedData) {
-
-// // Create the X axis:
-//     x.domain([0, d3.max(nestedData, function(d) { return d.Year}) ]);
-//     svg.selectAll(".myXaxis").transition()
-//     .duration(3000)
-//     .call(xAxis);
-
-// // create the Y axis
-//     y.domain([0, d3.max(nestedData, function(d) { return d.Total}) ]);
-//     svg.selectAll(".myYaxis")
-//     .transition()
-//     .duration(3000)
-//     .call(yAxis);
-
-// // Create a update selection: bind to the new data
-//     var u = svg.selectAll(".lineTest")
-//     .data([data], function(d){ return d.ser1 });
-
-// // Updata the line
-//     u       
-//     .enter()
-//     .append("path")
-//     .attr("class","lineTest")
-//     .merge(u)
-//     .transition()
-//     .duration(3000)
-//     .attr("d", d3.line()
-//         .x(function(d) { return x(d.ser1); })
-//         .y(function(d) { return y(d.ser2); }))
-//         .attr("fill", "none")
-//         .attr("stroke", "steelblue")
-//         .attr("stroke-width", 2.5)
-// }
-//     update(americanData)
-
-
     });
+
+// Set the dimensions and margins of the graph
+
+    var margin = {top: 10, right: 30, bottom: 30, left: 50},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// Append the svg object to the body of the page
+    var svg = d3.select("#finalchart")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+// Initialise a X axis:
+    var x = d3.scaleLinear().range([0,width]);
+    var xAxis = d3.axisBottom().scale(x);
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .attr("class","myXaxis")   
+
+// Initialize an Y axis
+    var y = d3.scaleLinear().range([height, 0]);
+    var yAxis = d3.axisLeft().scale(y);
+    svg.append("g")
+      .attr("class","myYaxis")
+
+// Create a function that takes a dataset as input and update the plot:
+    function update(nestedData) {
+
+// Create the X axis:
+    x.domain([0, d3.max(nestedData, function(d) { return d.Year})]);
+    svg.selectAll(".myXaxis").transition()
+      .duration(3000)
+      .call(xAxis);
+
+// create the Y axis
+    y.domain([0, d3.max(nestedData, function(d) { return d.Total})]);
+    svg.selectAll(".myYaxis")
+      .transition()
+      .duration(3000)
+      .call(yAxis);
+
+// Create a update selection: bind to the new data
+    var u = svg.selectAll(".lineTest")
+      .data([nestedData], function(d){ return d.Year });
+
+// Updata the line
+    u
+    .enter()
+    .append("path")
+    .attr("class","lineTest")
+    .merge(u)
+    .transition()
+    .duration(3000)
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Total); }))
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2.5)
+}
+
+// At the beginning, I run the update function on the first dataset:
+update(americanData)
+
     </script>
   </body>
 </html>
