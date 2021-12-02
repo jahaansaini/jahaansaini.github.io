@@ -10,9 +10,9 @@
     <div id="section2"> </div>
 
    
-    <button onclick="update(nestedData)">American Airlines Dataset </button>
-    <button onclick="update(unitedData)">United Airlines Dataset </button>
-    <button onclick="update(deltaData)">Delta Airlines Dataset </button>     
+    <button id="AA">American Airlines Dataset </button>
+    <button id="UA">United Airlines Dataset </button>
+    <button id="DL">Delta Airlines Dataset </button>     
   
     <script> 
 
@@ -101,7 +101,7 @@
             .call(xAxis)
       
       // create the Y axis
-          y.domain([0, d3.max(data, function(v) { return v.Total})]);
+          y.domain([0, d3.max(data, function(v) { return +v.Total})]);
           svg.selectAll(".myYaxis")
             .transition()
             .duration(3000)
@@ -128,6 +128,14 @@
       }
 
       update(data)
+            
+      d3.selectAll("button")
+        .on("click", function() {
+      var carrier = this.id;
+      if (carrier == "AA") update(americanData);
+      if (carrier == "UA") update(unitedData);
+      if (carrier == "DL") update(deltaData);
+  });
           });
     
       
