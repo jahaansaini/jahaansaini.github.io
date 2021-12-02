@@ -45,7 +45,7 @@
     
     <script> 
     // Loading CSV files
-    d3.csv("Passengers_Departures_Report.csv", function(d){
+    d3.csv("Passengers_Departures_Report.csv", function(error, data){
 
     console.log(data);
         data.forEach(function(d) {
@@ -54,74 +54,89 @@
 
       var nestedData = d3.nest()
         .key(function(d) { return d.Carrier; })
+        .key(function(d) { return d.Year })
         .entries(data);
       console.log(nestedData);
 
       var americanData = nestedData
-        .filter(function(d) {return d.key == "AA";});
+        .filter(function(d) {return d.key == "AA";})[0].values;
+      americanData.forEach(function(d) {
+        d.Total = d3.sum(d.values, function(v) {
+          return v.Total;
+        });
+      });
       console.log(americanData);
 
       var unitedData = nestedData
-        .filter(function(d) {return d.key == "UA";});
+        .filter(function(d) {return d.key == "UA";})[0].values;
+        unitedData.forEach(function(d) {
+        d.Total = d3.sum(d.values, function(v) {
+          return v.Total;
+        });
+      });
       console.log(unitedData);
 
       var deltaData = nestedData
-        .filter(function(d) {return d.key == "DL";});
+        .filter(function(d) {return d.key == "DL";})[0].values;
+        deltaData.forEach(function(d) {
+        d.Total = d3.sum(d.values, function(v) {
+          return v.Total;
+        });
+      });
       console.log(deltaData);
-    },
 
-    function(data){ 
-        var svg = d3.select("#finalchart")
+      var svg = d3.select("#finalchart")  
+// Initialise a X axis:
+   var x = d3.scaleLinear().range([0,width]);
+     var xAxis = d3.axisBottom().scale(x);
+     svg.append("g")
+     .attr("transform", "translate(0," + height + ")")
+     .attr("class","myXaxis")
 
-    // Initialise a X axis:
-        var x = d3.scaleLinear().range([0,width]);
-        var xAxis = d3.axisBottom().scale(x);
-        svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .attr("class","myXaxis")
+// // Initialize an Y axis
+//     var y = d3.scaleLinear().range([height, 0]);
+//     var yAxis = d3.axisLeft().scale(y);
+//     svg.append("g")
+//     .attr("class","myYaxis")
 
-    // Initialize an Y axis
-        var y = d3.scaleLinear().range([height, 0]);
-        var yAxis = d3.axisLeft().scale(y);
-        svg.append("g")
-        .attr("class","myYaxis")
+// // Create a function that takes a dataset as input and update the plot:
+//     function update(nestedData) {
 
-    // Create a function that takes a dataset as input and update the plot:
-        function update(nestedData) {
+// // Create the X axis:
+//     x.domain([0, d3.max(nestedData, function(d) { return d.Year}) ]);
+//     svg.selectAll(".myXaxis").transition()
+//     .duration(3000)
+//     .call(xAxis);
 
-    // Create the X axis:
-        x.domain([0, d3.max(nestedData, function(d) { return d.Year}) ]);
-        svg.selectAll(".myXaxis").transition()
-        .duration(3000)
-        .call(xAxis);
+// // create the Y axis
+//     y.domain([0, d3.max(nestedData, function(d) { return d.Total}) ]);
+//     svg.selectAll(".myYaxis")
+//     .transition()
+//     .duration(3000)
+//     .call(yAxis);
 
-    // create the Y axis
-        y.domain([0, d3.max(nestedData, function(d) { return d.Total}) ]);
-        svg.selectAll(".myYaxis")
-        .transition()
-        .duration(3000)
-        .call(yAxis);
+// // Create a update selection: bind to the new data
+//     var u = svg.selectAll(".lineTest")
+//     .data([data], function(d){ return d.ser1 });
 
-    // Create a update selection: bind to the new data
-        var u = svg.selectAll(".lineTest")
-        .data([data], function(d){ return d.ser1 });
+// // Updata the line
+//     u       
+//     .enter()
+//     .append("path")
+//     .attr("class","lineTest")
+//     .merge(u)
+//     .transition()
+//     .duration(3000)
+//     .attr("d", d3.line()
+//         .x(function(d) { return x(d.ser1); })
+//         .y(function(d) { return y(d.ser2); }))
+//         .attr("fill", "none")
+//         .attr("stroke", "steelblue")
+//         .attr("stroke-width", 2.5)
+// }
+//     update(americanData)
 
-    // Updata the line
-        u       
-        .enter()
-        .append("path")
-        .attr("class","lineTest")
-        .merge(u)
-        .transition()
-        .duration(3000)
-        .attr("d", d3.line()
-            .x(function(d) { return x(d.ser1); })
-            .y(function(d) { return y(d.ser2); }))
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 2.5)
-}
-        update(americanData)
+
     });
     </script>
   </body>
