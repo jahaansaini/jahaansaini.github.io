@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    font-family: "Garamond";
+    color: rgb(31, 97, 11);
+    text-align: center;
+  }
+ 
+
+  #banner {
+    background-image: url('pic.jpg'); 
+    background-position: 50% 100%;
+    background-size: cover;
+    font-family: "calibri";
+    padding: 20vh 20px;
+    text-align: center;
+  }
+  
+  .section {
+    align-items: center;
+    background-color: #4e9c52;
+    display: flex;
+    padding: 50px;
+  }
+  
+  .section p {
+    flex: 1;
+    border: 2px solid rgb(69, 102, 56);
+    border-radius: 5px;
+    background-color: rgb(142, 190, 102);
+  }
+  
+  .section svg {
+    border: 2px solid rgb(69, 165, 93);
+    border-radius: 5px;
+    flex: 2;
+    height: 300px;
+    margin: 20px;
+  }
+  
+  @media (max-width: 600px) {
+    .section {
+      flex-direction: column;
+    }
+    .section svg {
+      flex: none;
+      width: 100%;
+    }
+  }
+  
+  #tooltip {
+    background: rgb(41, 180, 48);
+    border: 1px solid rgb(76, 155, 12);
+    border-radius: 5px;
+    display: none;
+    padding: 5px;
+    position: absolute;
+  }

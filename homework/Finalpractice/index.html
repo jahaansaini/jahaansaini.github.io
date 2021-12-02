@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <title>U.S. Air Travel Trends Project </title>
+  </head>
+  <body>
+
+    <div id="section2"> </div>
+
+   
+    <button onclick="update(nestedData)">American Airlines Dataset </button>
+    <button onclick="update(unitedData)">United Airlines Dataset </button>
+    <button onclick="update(deltaData)">Delta Airlines Dataset </button>     
+  
+    <script> 
+
+      // Loading CSV files
+      
+          d3.csv("Passengers_Departures_Report.csv", function(error, data){
+      
+      // Convert Total Passengers from string to integer 
+      
+          console.log(data);
+              data.forEach(function(d) {
+                d["Total"] = parseFloat(d["Total"]);
+              });
+      
+      // Double nest the data & filter the data arrays for DL, AA, UA
+      
+            var nestedData = d3.nest()
+              .key(function(d) { return d.Carrier; })
+              .key(function(d) { return d.Year })
+              .entries(data);
+            console.log(nestedData);
+      
+            var americanData = nestedData
+              .filter(function(d) {return d.key == "AA";})[0].values;
+            americanData.forEach(function(d) {
+              d.Total = d3.sum(d.values, function(v) {
+                return v.Total;
+              });
+            });
+            console.log(americanData);
+      
+            var unitedData = nestedData
+              .filter(function(d) {return d.key == "UA";})[0].values;
+              unitedData.forEach(function(d) {
+              d.Total = d3.sum(d.values, function(v) {
+                return v.Total;
+              });
+            });
+            console.log(unitedData);
+      
+            var deltaData = nestedData
+              .filter(function(d) {return d.key == "DL";})[0].values;
+              deltaData.forEach(function(d) {
+              d.Total = d3.sum(d.values, function(v) {
+                return v.Total;
+              });
+            });
+            console.log(deltaData);
+      
+      
+      // Set the dimensions and margins of the graph
+      
+          var margin = {top: 10, right: 30, bottom: 30, left: 50},
+          width = 600 - margin.left - margin.right,
+          height = 600 - margin.top - margin.bottom;
+      
+      // Append the svg object to the body of the page
+          var svg = d3.select("#section2")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+      
+      // Initialise a X axis:
+          var x = d3.scaleLinear().range([0,width]);
+          var xAxis = d3.axisBottom().scale(x);
+          svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .attr("class","myXaxis")   
+      
+      // Initialize an Y axis
+          var y = d3.scaleLinear().range([height, 0]);
+          var yAxis = d3.axisLeft().scale(y);
+          svg.append("g")
+            .attr("class","myYaxis");
+      
+      // Create a function that takes a dataset as input and update the plot:
+          function update(data) {
+      
+      // Create the X axis:
+          x.domain([2014, d3.max(data, function(d) { return d.Year})]);
+          svg.selectAll(".myXaxis")
+            .transition()
+            .duration(3000)
+            .call(xAxis)
+      
+      // create the Y axis
+          y.domain([0, d3.max(data, function(v) { return v.Total})]);
+          svg.selectAll(".myYaxis")
+            .transition()
+            .duration(3000)
+            .call(yAxis);
+      
+      // Create a update selection: bind to the new data
+          var u = svg.selectAll(".lineTest")
+            .data([data], function(d){ return d.Year });
+      
+      // Update the line
+          u
+          .enter()
+          .append("path")
+          .attr("class","lineTest")
+          .merge(u)
+          .transition()
+          .duration(3000)
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.Year); })
+            .y(function(v) { return y(v.Total); }))
+            .attr("fill", "black")
+            .attr("stroke", "pink")
+            .attr("stroke-width", 2.5)
+      }
+
+      update(data)
+          });
+    
+      
+          </script>
+
+  </body>
+</html>
