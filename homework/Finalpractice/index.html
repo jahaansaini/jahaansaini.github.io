@@ -13,7 +13,8 @@
     <button id="AA">American Airlines Dataset </button>
     <button id="UA">United Airlines Dataset </button>
     <button id="DL">Delta Airlines Dataset </button>     
-  
+
+
     <script> 
 
       // Loading CSV files
@@ -21,8 +22,6 @@
           d3.csv("Passengers_Departures_Report.csv", function(error, data){
       
       // Convert Total Passengers from string to integer 
-      
-          console.log(data);
               data.forEach(function(d) {
                 d["Total"] = parseFloat(d["Total"]);
               });
@@ -33,7 +32,6 @@
               .key(function(d) { return d.Carrier; })
               .key(function(d) { return d.Year })
               .entries(data);
-            console.log(nestedData);
       
             var americanData = nestedData
               .filter(function(d) {return d.key == "AA";})[0].values;
@@ -41,8 +39,8 @@
               d.Total = d3.sum(d.values, function(v) {
                 return v.Total;
               });
+              d.Year = parseFloat(d.key);
             });
-            console.log(americanData);
       
             var unitedData = nestedData
               .filter(function(d) {return d.key == "UA";})[0].values;
@@ -50,8 +48,8 @@
               d.Total = d3.sum(d.values, function(v) {
                 return v.Total;
               });
+              d.Year = parseFloat(d.key);
             });
-            console.log(unitedData);
       
             var deltaData = nestedData
               .filter(function(d) {return d.key == "DL";})[0].values;
@@ -59,14 +57,13 @@
               d.Total = d3.sum(d.values, function(v) {
                 return v.Total;
               });
+              d.Year = parseFloat(d.key);
             });
-            console.log(deltaData);
-      
-      
+          
       // Set the dimensions and margins of the graph
       
-          var margin = {top: 10, right: 30, bottom: 30, left: 50},
-          width = 600 - margin.left - margin.right,
+          var margin = {top: 10, right: 30, bottom: 30, left: 90},
+          width = 800 - margin.left - margin.right,
           height = 600 - margin.top - margin.bottom;
       
       // Append the svg object to the body of the page
@@ -75,33 +72,46 @@
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
-            .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+            .attr("transform","translate(" + margin.left + "," + margin.top + ")")
+            .attr("data-legend",function(d) { return d.carrier})
+            .style("stroke", function(d) { return color(d.Carrier); });
       
       // Initialise a X axis:
           var x = d3.scaleLinear().range([0,width]);
-          var xAxis = d3.axisBottom().scale(x);
+          var xAxis = d3.axisBottom()
+          .scale(x)
+          .ticks(6)
+          .tickFormat(function(d) {
+            return d;
+          });
           svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .attr("class","myXaxis")   
+            .attr("stroke","#E04836")
+            .attr("stroke-width","1")
+            .attr("opacity",".6");
       
       // Initialize an Y axis
           var y = d3.scaleLinear().range([height, 0]);
           var yAxis = d3.axisLeft().scale(y);
           svg.append("g")
-            .attr("class","myYaxis");
+            .attr("class","myYaxis")
+            .attr("stroke","#E04836")
+            .attr("stroke-width","1")
+            .attr("opacity",".6");
       
       // Create a function that takes a dataset as input and update the plot:
           function update(data) {
       
       // Create the X axis:
-          x.domain([2014, d3.max(data, function(d) { return d.Year})]);
+          x.domain([2015, d3.max(data, function(d) { return d.Year})]);
           svg.selectAll(".myXaxis")
             .transition()
             .duration(3000)
             .call(xAxis)
       
       // create the Y axis
-          y.domain([0, d3.max(data, function(v) { return +v.Total})]);
+          y.domain([4000000, d3.max(data, function(v) { return +v.Total})]);
           svg.selectAll(".myYaxis")
             .transition()
             .duration(3000)
@@ -122,12 +132,11 @@
           .attr("d", d3.line()
             .x(function(d) { return x(d.Year); })
             .y(function(v) { return y(v.Total); }))
-            .attr("fill", "black")
+            .attr("fill", "none")
             .attr("stroke", "pink")
             .attr("stroke-width", 2.5)
       }
-
-      update(data)
+      update(unitedData)
             
       d3.selectAll("button")
         .on("click", function() {
@@ -136,6 +145,18 @@
       if (carrier == "UA") update(unitedData);
       if (carrier == "DL") update(deltaData);
   });
+      legend = svg.append("g")
+        .attr("class","legend")
+        .attr("transform","translate(50,30)")
+        .style("font-size","12px")
+        .call(d3.legend)
+
+      setTimeout(function() { 
+        legend
+          .style("font-size","20px")
+          .attr("data-style-padding",10)
+          .call(d3.legend)
+      },1000)
           });
     
       

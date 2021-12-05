@@ -33,12 +33,13 @@
       <h2 id="title"></h2>
       Value: <span id="value"></span>
     </div>
-
     <script src="banner.js"></script>
-
     <script src="chart1.js"></script>
-
     <script> 
+    // set the dimensions and margins of the graph
+    var margin = {top: 10, right: 30, bottom: 30, left: 60},
+      width = 460 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
 
     // Loading CSV files
     d3.csv("Passengers_Departures_Report.csv", function(error, data){
@@ -65,7 +66,6 @@
         .filter(function(d) {return d.key == "DL";});
       console.log(deltaData);
     });
-
       </script>
 
   </body>
