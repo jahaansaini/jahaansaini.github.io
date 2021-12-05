@@ -19,14 +19,8 @@
     </div>
 
     <div class="section">
-      <svg id="chart1"></svg>
       <p> Line graphs for the two biggest (% of market share) travel companies showing flight and passenger trends managers to gauge operational efficiency by tracking the ratio between the two.
         <br> A highly efficient airline will show trendlines that are similar and overlap. When there is a significant discrepancy, we can see a distinct gap.</p>
-    </div>
-
-    <div id="tooltip">
-      <h2 id="title"></h2>
-      Value: <span id="value"></span>
     </div>
     
     <script src="banner.js"></script>
@@ -37,7 +31,11 @@
     <button id="AA">American Airlines Dataset </button>
     <button id="UA">United Airlines Dataset </button>
     <button id="DL">Delta Airlines Dataset </button>     
-
+    
+    <div class="section3">
+      <p> Conclusion
+        <br> </p>
+    </div>
 
     <script> 
 
@@ -83,7 +81,7 @@
               });
               d.Year = parseFloat(d.key);
             });
-          
+        
       // Set the dimensions and margins of the graph
       
           var margin = {top: 10, right: 30, bottom: 30, left: 90},
@@ -169,6 +167,43 @@
         if (carrier == "UA") update(unitedData);
         if (carrier == "DL") update(deltaData);
   });
+  var tooltip = d3.select("#section2")
+                        .append('div')
+                        .style("opacity", 1)
+                        .style("border-width", "1px")
+                        .style("color", "#Bdba85")
+                        .attr("class", "tooltip")
+                        .style("background-color", "white")
+                        .style("border-width", "2px")
+                        .style("border-radius", "5px")
+                        .style("padding", "5px")
+                        .style("font-size", "18px")
+                        .style("position", "absolute")
+
+              var mouseover = function(d) {
+                      tooltip.style("opacity", 1)
+                      d3.select(this)
+                        .style("stroke", "#Bdba85")
+                        .style("stroke-width", 6)
+                        .style("top", d3.event.pageY + 10 + "px")
+                        .style("left", d3.event.pageX + 10 +"px");
+              }
+
+              var mousemove = function(d) {
+                tooltip
+                  .html("<b>" + d.Carrier + "</b>: " + v.Total + " passengers in " + d.Year + " year.")
+                  .style("top", d3.event.pageY + 10 + "px")
+                        .style("left", d3.event.pageX + 10 +"px");
+              }
+              
+              var mouseleave = function(d) {
+                tooltip
+                  .style("opacity", 0)
+                d3.select(this)
+                  .style("stroke", "#Bdba85")
+                  .style("stroke-width", 4)
+                  .style("opacity", 1)
+              }
           });
     
       
