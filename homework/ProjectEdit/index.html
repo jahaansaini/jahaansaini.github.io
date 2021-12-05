@@ -28,9 +28,9 @@
 
     <div id="section2"> </div>
 
-    <button id="AA">American Airlines Dataset </button>
-    <button id="UA">United Airlines Dataset </button>
-    <button id="DL">Delta Airlines Dataset </button>     
+    <button id="AA" class="button button1">American Airlines Dataset </button>
+    <button id="UA" class="button button2">United Airlines Dataset </button>
+    <button id="DL" class="button button3">Delta Airlines Dataset </button>     
     
     <div class="section3">
       <p> Conclusion
@@ -167,7 +167,7 @@
         if (carrier == "UA") update(unitedData);
         if (carrier == "DL") update(deltaData);
   });
-  var tooltip = d3.select("#section2")
+            var tooltip = d3.select("#section2")
                         .append('div')
                         .style("opacity", 1)
                         .style("border-width", "1px")
@@ -176,7 +176,6 @@
                         .style("background-color", "white")
                         .style("border-width", "2px")
                         .style("border-radius", "5px")
-                        .style("padding", "5px")
                         .style("font-size", "18px")
                         .style("position", "absolute")
 
