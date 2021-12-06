@@ -10,18 +10,40 @@
 
     <div id="banner">
       <h1>U.S. Air Travel Trends</h1> 
-       <h3> 
+       <h2 style="color: white;">  
         <br> ARTG 5330 - Vis Tech 1: Fundamentals Final Project
-        <br> Professor David Landry 
+        <br> Jahaan Saini 
         <br> Tuesday, December 7th 
-      </h3>
+      </h2>
     </div>
 
     <div class="section">
-      <p> Description:  Millions of people take flights in the U.S. every year for reasons that range from business, tourism, to family visits. Due to the high number of flights, there is a tremendous amount of available data that can be used to extract valuable insights for stakeholders in the airline industry. 
-        <br> Objective: The objective of this project is to identify trends in U.S. air travel to (1) understand changes in passenger behavior throughout the years to further prepare for future events.
-        <br>Line graphs for the two biggest (% of market share) travel companies showing flight and passenger trends managers to gauge operational efficiency by tracking the ratio between the two.
-        <br> A highly efficient airline will show trendlines that are similar and overlap. When there is a significant discrepancy, we can see a distinct gap.
+      <p> <br> <b>Description: </b> Millions of people take flights in the U.S. every year for reasons that range from business, tourism, to family visits. Due to the high number of flights, there is a tremendous amount of available data that can be used to extract valuable insights for stakeholders in the airline industry. 
+        <br> <b>Objective: </b> Identify trends in U.S. air travel by looking at the top <b>3 airline carriers </b>to <i>understand changes in passenger behavior throughout the years and to prepare for future events.</i> 
+        <br>The chart below is a <b> line graph </b> for the 3 biggest (% of market share) airline carriers.&nbsp; &nbsp; &nbsp;
+    </p> 
+    </div>
+
+    <div class="observations">
+      <p style="text-align:left">
+        
+        <b>American Airlines: </b>
+        <br>  &nbsp; &nbsp; &nbsp;1. After a sucessful merger between US Airways & American Airlines, they were awarded a single operating certificate in 2015 as US Airways was discontinued and all flights were branded under American Airlines. 
+        <br>  &nbsp; &nbsp; &nbsp;2. There is gradual increase in passengers from 2016 to 2018 after which there is a rapid increase from 2018 to 2019 due to the steep slope.
+        <br>  &nbsp; &nbsp; &nbsp;3. As predicted, the passenger travel dropped tremendously (approximately 25m) from 2019 to 2020 due to COVID-19 global pandemic impacting domestic and international travel.  
+       
+        <br> <br> <b>United Airlines:</b>
+        <br>  &nbsp; &nbsp; &nbsp;1. In 2015, UA flights were grounded twice due to router failures and were facing a tough patch.
+        <br>  &nbsp; &nbsp; &nbsp;2. In 2017, UA faced a law suit where they forcibly removed a passenger which led to injuries. Their horrible behavior led to a PR disaster.
+        <br>  &nbsp; &nbsp; &nbsp;3. There is a rapid increase from 2018-2019 as UA stratergized growth through expansion in routes to Tokyo. 
+        <br>  &nbsp; &nbsp; &nbsp;4. As predicted, the passenger travel dropped tremendously (approximately 24m) from 2019 to 2020 due to COVID-19 global pandemic impacting domestic and international travel.  
+
+        <br> <br> <b>Delta Airlines:</b> 
+        <br>  &nbsp; &nbsp; &nbsp;1. In 2016, thousands of flights were delayed/ cancelled due to tech issues.
+        <br>  &nbsp; &nbsp; &nbsp;2. In 2017-2018, DL expanded to Airbus A220 and bought 75 new jets. 
+        <br>  &nbsp; &nbsp; &nbsp;3. In 2019, DL partnered with LATAM Airlnes which is probably why the were able to reach such a high number of passengers.
+        <br>  &nbsp; &nbsp; &nbsp;4. As predicted, the passenger travel dropped tremendously (approximately 21m) from 2019 to 2020 due to COVID-19 global pandemic impacting domestic and international travel.  
+
       </p>
     </div>
     
@@ -33,10 +55,13 @@
     <button id="DL" class="button button3">Delta Airlines Dataset </button>     
     
     <div class="section3">
-      <p> Conclusion
-        <br> </p>
+      <p>   
+        <br> This graph along with information on flight trends can be utilized by airline managers to gauge operational efficiency by tracking the ratio between the two. 
+        <br><b> A highly efficient airline </b> will show trendlines that are similar and overlap. 
+        <br><b>A inefficient airline</b>will have significant descrepancies between the trend. This could imply that the airline was scheduling more flights than necessary or is not meeting demand.
+        <br> &nbsp; &nbsp; &nbsp;
+      </p>
     </div>
-
     <script> 
 
       // Loading CSV files
@@ -54,6 +79,7 @@
               .key(function(d) { return d.Carrier; })
               .key(function(d) { return d.Year })
               .entries(data);
+              console.log(nestedData);
       
             var americanData = nestedData
               .filter(function(d) {return d.key == "AA";})[0].values;
@@ -63,6 +89,7 @@
               });
               d.Year = parseFloat(d.key);
             });
+            console.log(americanData);
       
             var unitedData = nestedData
               .filter(function(d) {return d.key == "UA";})[0].values;
@@ -131,13 +158,28 @@
             .transition()
             .duration(3000)
             .call(xAxis)
-      
+
+      // Create text label for the x axis
+          svg.append("text")
+            .attr("transform", "translate(" + (width / 2) + " ," + (height + margin.bottom) + ")")
+            .style("text-anchor", "middle")
+            .text("Year");
+          
       // create the Y axis
           y.domain([4000000, d3.max(data, function(v) { return +v.Total})]);
           svg.selectAll(".myYaxis")
             .transition()
             .duration(3000)
             .call(yAxis);
+      
+      // Create text label for the y axis
+          svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x",0 - (height / 2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Total Number of Passengers");
       
       // Create a update selection: bind to the new data
           var u = svg.selectAll(".lineTest")
@@ -159,7 +201,7 @@
           .attr("stroke-width", 3.5);
       }
 
-      update(unitedData)
+      update(americanData)
             
       d3.selectAll("button")
         .on("click", function() {
