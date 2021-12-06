@@ -10,7 +10,7 @@ body {
 {
   font-size: 48px;
   text-shadow: -1px -1px rgb(100, 145, 137), 1px 1px rgb(82, 243, 195), -3px 0 4px #000;
-  font-family:"Segoe print", Arial, Helvetica, sans-serif;
+  font-family:"Garamond";
   color:#2e5248;
   padding:24px 32px 32px 32px;
   font-weight:lighter;
@@ -18,6 +18,19 @@ body {
   display:inline;
   line-height:150px;
 }
+  h5
+{
+  font-size: 48px;
+  text-shadow: -1px -1px rgb(100, 145, 137), 1px 1px rgb(129, 192, 173), -3px 0 4px #000;
+  font-family:"Garamond";
+  color:#2e5248;
+  padding:24px 32px 32px 32px;
+  font-weight:lighter;
+  text-align:center;
+  display:inline;
+  line-height:150px;
+  }
+
   .line-path {
     fill: none;
     stroke-width: 5;
@@ -40,7 +53,6 @@ body {
   .section {
     background-image: url('pic2.svg'); 
     align-items: center;
-    background-size: cover;
     display: flex;
     padding: 50px;
     text-align: center;  
