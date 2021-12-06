@@ -2,7 +2,7 @@ body {
     margin: 0;
     font-family: "Garamond";
     font-size: 20px; 
-    color: rgb(26, 102, 89);
+    color: rgb(104, 247, 204);
     text-align: center;
   }
   
@@ -33,7 +33,6 @@ body {
     font-family: "Garamond";
     font-weight: bold;
     font-size: 20px;
-    font-style: italic;
     padding: 20vh 20px;
     text-align: center;
   }
@@ -54,16 +53,17 @@ body {
   }
   
   .section p {
+    background-color: #ac7c54;
     flex: 1;
     border: 2px solid rgb(46, 78, 62);
     border-radius: 5px;
-    background-color:rgb(26, 102, 89);
   }
   .section3 p {
+    background-color: #ac7c54;
     flex: 1;
     border: 2px solid rgb(69, 102, 56);
     border-radius: 5px;
-    background-color: #ac7c54;
+   
   }
   
   .section svg {
