@@ -24,8 +24,6 @@
     </div>
     
     <script src="banner.js"></script>
-    <script src="chart1.js"></script>
-
     <div id="section2"> </div>
 
     <button id="AA" class="button button1">American Airlines Dataset </button>
@@ -94,7 +92,7 @@
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
-            .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+            .attr("transform","translate(" + margin.left + "," + margin.top + ")")
       
       // Initialise a X axis:
           var x = d3.scaleLinear().range([0,width]);

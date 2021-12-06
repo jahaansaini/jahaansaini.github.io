@@ -25,7 +25,10 @@ body {
   .section {
     background-image: url('pic2.svg'); 
     align-items: center;
-  
+    background-size: cover;
+    display: flex;
+    padding: 20vh 20px;
+    text-align: center;  
   }
   .section3 {
     align-items: center;
