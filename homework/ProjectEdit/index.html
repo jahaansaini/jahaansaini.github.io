@@ -9,18 +9,19 @@
   <body>
 
     <div id="banner">
-
       <h1>U.S. Air Travel Trends</h1> 
-      <p style="background-color: #ca986f"> 
-          Description:  Millions of people take flights in the U.S. every year for reasons that range from business, tourism, to family visits. Due to the high number of flights, there is a tremendous amount of available data that can be used to extract valuable insights for stakeholders in the airline industry. 
-        <br> Objective: The objective of this project is to identify trends in U.S. air travel to (1) understand changes in passenger behavior throughout the years to further prepare for future events.
+      <p> ARTG 5330 - Vis Tech 1: Fundamentals Final Project
+        <br> Professor David Landry 
+        <br> Tuesday, December 7th 
       </p>
-
     </div>
 
     <div class="section">
-      <p> Line graphs for the two biggest (% of market share) travel companies showing flight and passenger trends managers to gauge operational efficiency by tracking the ratio between the two.
-        <br> A highly efficient airline will show trendlines that are similar and overlap. When there is a significant discrepancy, we can see a distinct gap.</p>
+      <p> Description:  Millions of people take flights in the U.S. every year for reasons that range from business, tourism, to family visits. Due to the high number of flights, there is a tremendous amount of available data that can be used to extract valuable insights for stakeholders in the airline industry. 
+        <br> Objective: The objective of this project is to identify trends in U.S. air travel to (1) understand changes in passenger behavior throughout the years to further prepare for future events.
+        <br>Line graphs for the two biggest (% of market share) travel companies showing flight and passenger trends managers to gauge operational efficiency by tracking the ratio between the two.
+        <br> A highly efficient airline will show trendlines that are similar and overlap. When there is a significant discrepancy, we can see a distinct gap.
+      </p>
     </div>
     
     <script src="banner.js"></script>
@@ -88,13 +89,14 @@
       
       // Append the svg object to the body of the page
           var svg = d3.select("#section2")
+            .style("background-color", "rgb(46, 78, 62)")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform","translate(" + margin.left + "," + margin.top + ")")
-      
-      // Initialise a X axis:
+
+            // Initialise a X axis:
           var x = d3.scaleLinear().range([0,width]);
           var xAxis = d3.axisBottom()
           .scale(x)
@@ -105,7 +107,7 @@
           svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .attr("class","myXaxis")   
-            .attr("stroke","#E04836")
+            .attr("stroke","white")
             .attr("stroke-width","1")
             .attr("opacity",".6");
 
@@ -114,7 +116,7 @@
           var yAxis = d3.axisLeft().scale(y);
           svg.append("g")
             .attr("class","myYaxis")
-            .attr("stroke","#E04836")
+            .attr("stroke","white")
             .attr("stroke-width","1")
             .attr("opacity",".6");
 
