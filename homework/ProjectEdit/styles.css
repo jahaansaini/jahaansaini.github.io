@@ -47,7 +47,7 @@ body {
   }
   .section3 {
     align-items: center;
-    background-color: #537464;
+    background-image: url('pic2.svg'); 
     display: flex;
     padding: 50px;
   }
@@ -61,20 +61,18 @@ body {
   .section3 p {
     background-color: #ac7c54;
     flex: 1;
-    border: 2px solid rgb(69, 102, 56);
+    border: 2px solid rgb(46, 78, 62);
     border-radius: 5px;
-   
   }
-  
   .section svg {
-    border: 2px solid #ac7c54;
+    border: 2px solid #0f6e4f;
     border-radius: 5px;
     flex: 2;
     height: 300px;
     margin: 20px;
   }
   .section3 svg {
-    border: 2px solid #ac7c54;
+    border: 2px solid #0f6e4f;
     border-radius: 5px;
     flex: 2;
     height: 300px;

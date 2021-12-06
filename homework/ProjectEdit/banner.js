@@ -1,4 +1,4 @@
-var bannerimage = "pic.jpg";
+var bannerimage = "water.jpg";
 
     d3.select("#banner")
       .style("background-image", "bannerimage");
