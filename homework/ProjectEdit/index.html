@@ -29,7 +29,9 @@
 
     <button id="AA" class="button button1">American Airlines Dataset </button>
     <button id="UA" class="button button2">United Airlines Dataset </button>
-    <button id="DL" class="button button3">Delta Airlines Dataset </button>     
+    <button id="DL" class="button button3">Delta Airlines Dataset </button>  
+    <button id="NK" class="button button3">Spirit Airlines Dataset </button>  
+
     
     <div class="observations">
       <p style="text-align:left">
@@ -108,6 +110,16 @@
               });
               d.Year = parseFloat(d.key);
             });
+
+            var spiritData = nestedData
+              .filter(function(d) {return d.key == "NK";})[0].values;
+              spiritData.forEach(function(d) {
+              d.Total = d3.sum(d.values, function(v) {
+                return v.Total;
+              });
+              d.Year = parseFloat(d.key);
+            });
+            console.log(spiritData);
       
       // Set the dimensions and margins of the graph
       
@@ -128,7 +140,7 @@
           var x = d3.scaleLinear().range([0,width]);
           var xAxis = d3.axisBottom()
           .scale(x)
-          .ticks(6)
+          .ticks(5)
           .tickFormat(function(d) {
             return d;
           });
@@ -153,7 +165,7 @@
           function update(data) {
       
       // Create the X axis:
-          x.domain([2015, d3.max(data, function(d) { return d.Year})]);
+          x.domain([2015, 2019]);
           svg.selectAll(".myXaxis")
             .transition()
             .duration(3000)
@@ -166,7 +178,7 @@
             .text("Year");
           
       // create the Y axis
-          y.domain([4000000, d3.max(data, function(v) { return +v.Total})]);
+          y.domain([1400000, d3.max(data, function(v) { return +v.Total})]);
           svg.selectAll(".myYaxis")
             .transition()
             .duration(3000)
@@ -209,6 +221,7 @@
         if (carrier == "AA") update(americanData);
         if (carrier == "UA") update(unitedData);
         if (carrier == "DL") update(deltaData);
+        if (carrier == "NK") update (spiritData)
   });
           });
     
