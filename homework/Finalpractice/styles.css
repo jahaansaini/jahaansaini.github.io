@@ -55,3 +55,8 @@ body {
     padding: 5px;
     position: absolute;
   }
+  
+  .legend rect {
+    fill:white;
+    stroke:black;
+    opacity:0.8;}
